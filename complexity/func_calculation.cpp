@@ -17,9 +17,10 @@
 // }
 
 #include <iostream>
-using namespace std;
 
 int main() {
+    using namespace std;
+
     long long n;
     cin >> n;
 

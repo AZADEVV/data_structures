@@ -3,4 +3,5 @@ project(data_structure)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(data_structure complexity/func_calculation.cpp)
+add_executable(data_structure complexity/func_calculation.cpp
+        complexity/ring_road.cpp)
