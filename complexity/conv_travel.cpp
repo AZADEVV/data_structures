@@ -1,22 +1,19 @@
 #include <iostream>
+#include <algorithm>
 
 int main() {
     using namespace std;
 
-    int n, m, a, b, count = 0;
+    int n, m, a, b;
     cin >> n >> m >> a >> b;
 
-    // cout << n / a << endl;
+    int cost1 = n * a;
 
+    int cost2 = (n / m) * b + (n % m) * a;
 
-    while (n > 0) {
-        n = n - m;
+    int cost3 = ((n + m - 1) / m) * b;
 
-        count += b;
-        cout << count << endl;
-    }
-
-    cout << n << endl;
+    cout << min({cost1, cost2, cost3}) << endl;
 
     return 0;
 }
