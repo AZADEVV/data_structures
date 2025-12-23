@@ -1,57 +1,56 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <set>
+
+using namespace std;
+
+const int MAXID = 1000001;
+int next_id[MAXID];
+int count_in[MAXID];
 
 int main() {
-    using namespace std;
-
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
     int n;
     cin >> n;
 
-    unordered_map<int, int> next;
-    next.reserve(n * 2);
-
-    int first = -1;
-
-    for (int i = 0; i < n; i++) {
-        int a, b;
-        cin >> a >> b;
-
-        if (a == 0) {
-            first = b == 0 ? -1 : b;
-            first = (b == 0 ? i : first);
-        }
-
-        if (a != 0) {
-            next[a] = b;
+    vector<int> a(n), b(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i] >> b[i];
+        next_id[a[i]] = b[i];
+        if (b[i] != 0) {
+            count_in[b[i]]++;
         }
     }
 
-    unordered_set<int> hasPrev;
-    for (auto &p : next) {
-        hasPrev.insert(p.second);
-    }
-
-    for (auto &p : next) {
-        if (!hasPrev.count(p.first)) {
-            first = p.first;
+    int first = 0;
+    for (int i = 0; i < n; ++i) {
+        if (a[i] != 0 && count_in[a[i]] == 0) {
+            first = a[i];
             break;
         }
     }
 
-    vector<int> answer;
-    int cur = first;
-    while (cur != 0) {
-        answer.push_back(cur);
-        if (!next.count(cur)) break;
-        cur = next[cur];
+    vector<int> result(n + 1);
+
+    int curr = first;
+    for (int i = 1; i <= n; i += 2) {
+        result[i] = curr;
+        curr = next_id[curr];
     }
 
-    for (int x : answer) {
-        cout << x << " ";
+    curr = next_id[0];
+    for (int i = 2; i <= n; i += 2) {
+        result[i] = curr;
+        curr = next_id[curr];
     }
-    cout << "\n";
+
+    for (int i = 1; i <= n; ++i) {
+        cout << result[i] << (i == n ? "" : " ");
+    }
+    cout << endl;
 
     return 0;
 }
